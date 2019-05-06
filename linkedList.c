@@ -108,10 +108,10 @@ int containsLinkedList(LinkedList *l, TYPE val)
   struct Link* curr= l->head;
   while(curr->next!=NULL){
     if(curr->value==val)
-      return true;
+      return 1;
     curr=curr->next;
   }
-  return false;
+  return 0;
 }
 
 void _removeLink(struct Link *prev, struct Link *cur)
