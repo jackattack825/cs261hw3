@@ -9,8 +9,8 @@
 	pre: l is not null
 	post: the head of the linked list is initialized to null, isEmpty returns true
 */
-void initLinkedList(LinkedList *l) 
-{ 
+void initLinkedList(LinkedList *l)
+{
    l -> head = NULL;
 }
 
@@ -20,9 +20,9 @@ void initLinkedList(LinkedList *l)
 	pre: l is not null
 	post: none
 */
-int isEmptyLinkedList(LinkedList *l) 
-{ 
-   return (l->head == NULL); 
+int isEmptyLinkedList(LinkedList *l)
+{
+   return (l->head == NULL);
 }
 
 /*
@@ -33,14 +33,14 @@ int isEmptyLinkedList(LinkedList *l)
 */
 
 /*----------------------------------------------------------------------------*/
-/* Note: Free gets rid of all links but keeps the head of the list around, so 
+/* Note: Free gets rid of all links but keeps the head of the list around, so
    the list itself still exists and is initialized.
 */
 
 void freeLinkedList(LinkedList *l) {
 
-  while (!isEmptyLinkedList(l)) 
-  { 
+  while (!isEmptyLinkedList(l))
+  {
      popLinkedList(l);
   }
 }
@@ -60,7 +60,7 @@ void pushLinkedList(LinkedList *l, TYPE val) {
   struct Link *link = (struct Link *)malloc(sizeof(struct Link));
   assert(link != NULL);
 
-  link->next = l->head;  
+  link->next = l->head;
   link->val = val;
   l->head = link;
 }
@@ -79,7 +79,7 @@ TYPE topLinkedList(LinkedList *l) {
   return l->head->val;
 }
 
-/* 	
+/*
 	popLinkedList
 	param: l the linked list
 	pre: l is not null
@@ -105,6 +105,13 @@ void addLinkedList (LinkedList *l, TYPE val)
 int containsLinkedList(LinkedList *l, TYPE val)
 {
 /* write this function */
+  struct Link* curr= l->head;
+  while(curr->next!=NULL){
+    if(curr->value==val)
+      return true;
+    curr=curr->next;
+  }
+  return false;
 }
 
 void _removeLink(struct Link *prev, struct Link *cur)
@@ -128,10 +135,16 @@ void removeLinkedList (LinkedList *l, TYPE val)
 			l->head = l->head->next;
 			free(cur);
 		}
-	else {	
+	else {
            /* write this part of the function */
-	}
-		
-}
+      prev=l->head;
+      cur=l->head->next;
+      while(cur->next!=NULL){
+        if(cur->value==val){
+          _removeLink(prev, cur);
+        }
+      }
 
- 
+	}
+
+}

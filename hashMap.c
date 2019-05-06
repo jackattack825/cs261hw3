@@ -35,10 +35,28 @@ void initMap (struct hashMap * ht, int tableSize)
 
 void freeMap (struct hashMap * ht)
 {  /*write this*/
+	int i;
+	for(i=0; i<ht->tableSize; i++){
+		free(ht->table[i]);
+	}
+	free(ht->table);
+	free(ht);
 }
 
 void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 {  /*write this*/
+	int hash= stringHash1(k);
+	int index= (int) (labs(hash) % ht->tableSize);
+	struct hashLink* newLink= (struct hashLink*) malloc(sizeof(struct hashLink));
+	assert(newLink);
+	newLink->value=v;
+	newLink->next= ht->table[index];
+	ht->table[index]=newLink;
+	ht->count++;
+
+	float loadFac = ht->count/ht->tableSize;
+	if(loadFac > Max_Load)
+		_resi
 }
 
 ValueType* atMap (struct hashMap * ht, KeyType k)
