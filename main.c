@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "hashMap.h"
+#include "linkedList.h"
 
 /*
  the getWord function takes a FILE pointer and returns you a string which was
@@ -20,35 +21,38 @@ char* getWord(FILE *file); /* prototype */
 
 int main (int argc, const char * argv[]) {
     /*Write this function*/
+  int ch;
+  char* temp;
+  LinkedList* l;
+  FILE* f;
+  hashMap* hM;
   if(argc <1){
     printf("not enough args");
     exit(0);
   }
-  int ch;
-  LinkedList* l;
-  hashMap hM= initMap(hM, 16);
-  File* f=(argv[1], 'r');
+  initMap(hM, 16);
+  f=fopen(argv[1], 'r');
   ch= getc(f);
-  l=initLinkedList(l);
+  initLinkedList(l);
 
   while(ch!= EOF){
     temp= getWord(f);
-    pushLinkedList(temp);
+    pushLinkedList(l, temp);
     if(containsKey(hM, temp))
-      insertMap(hm, temp, atMap(hm, temp) +1);
+      insertMap(hM, temp, atMap(hM, temp) +1);
     else
-      insertMap(hm, temp, 1);
+      insertMap(hM, temp, 1);
     ch=getc(f);
   }
   while(!isEmptyLinkedList(l)){
     temp= topLinkedList(l);
     popLinkedList(l);
-    print("%s : %d\n", temp, atMap(hM, temp));
+    printf("%s : %d\n", temp, atMap(hM, temp));
   }
   return 0;
 }
 
-char* getWord(File *file){
+char* getWord(FILE *file){
   char* c;
   fgets(c, 20, file);
   return c;

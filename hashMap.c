@@ -44,11 +44,13 @@ void freeMap (struct hashMap * ht)
 
 void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 {  /*write this*/
+	float loadFac;
 	int hash, index;
+	struct hashLink* newLink;
 	if(!containsKey(ht, k)){
 		hash= stringHash1(k);
 		index= (int) (labs(hash) % ht->tableSize);
-		struct hashLink* newLink= (struct hashLink*) malloc(sizeof(struct hashLink));
+		newLink= (struct hashLink*) malloc(sizeof(struct hashLink));
 		assert(newLink);
 		newLink->value=v;
 		newLink->next= ht->table[index];
@@ -61,10 +63,10 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 		ht->table[index]->value=v;
 	}
 
-	float loadFac = ht->count/ht->tableSize;
+	loadFac = ht->count/ht->tableSize;
 
 	if(loadFac > 0.75){
-		int oldsize = ht->tablesize;
+		int oldsize = ht->tableSize;
 		struct hashMap *oldht = ht;
 		struct hashLink *cur, *last;
 		int i;
@@ -104,7 +106,8 @@ int containsKey (struct hashMap * ht, KeyType k)
 void removeKey (struct hashMap * ht, KeyType k)
 {  /*write this?*/
 	int hash, index;
-	struct hashLink* curr, prev;
+	struct hashLink* curr;
+	struct hashLink* prev;
 	hash= stringHash1(k);
 	index= (int) (labs(hash) % ht->tableSize);
 	if(ht->table[index]==NULL)
@@ -121,7 +124,21 @@ void removeKey (struct hashMap * ht, KeyType k)
 
 int sizeMap (struct hashMap *ht)
 {  /*write this*/
-	return ht->count;
+	int i;
+	hashLink* link;
+	int count=0;
+	for(i=0; i<ht->tableSize; i++){
+		link=ht->table[i];
+		if(link!=NULL){
+			count++;
+			while(link->next!=NULL){
+				count++;
+				link=link->next;
+			}
+		}
+	}
+
+	return count;
 }
 
 int capacityMap(struct hashMap *ht)

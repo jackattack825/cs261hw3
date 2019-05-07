@@ -50,7 +50,7 @@ void freeLinkedList(LinkedList *l) {
 /*
 	pushLinkedList
 	param: l the linked list
-	param: val the value to be pushed
+	param: val the val to be pushed
 	pre: l is not null
 	post: l is not empty, l size has increased by one
 */
@@ -107,7 +107,7 @@ int containsLinkedList(LinkedList *l, TYPE val)
 /* write this function */
   struct Link* curr= l->head;
   while(curr->next!=NULL){
-    if(curr->value==val)
+    if(curr->val==val)
       return 1;
     curr=curr->next;
   }
@@ -140,7 +140,7 @@ void removeLinkedList (LinkedList *l, TYPE val)
       prev=l->head;
       cur=l->head->next;
       while(cur->next!=NULL){
-        if(cur->value==val){
+        if(cur->val==val){
           _removeLink(prev, cur);
         }
       }
