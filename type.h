@@ -1,5 +1,5 @@
 /*	type.h
-	
+
 	Defines the type to be stored in the data structure.  These macros
 	are for convenience to avoid having to search and replace/dup code
 	when you want to build a structure of doubles as opposed to ints
@@ -10,8 +10,8 @@
 #define __TYPE_H
 
 # ifndef TYPE
-# define TYPE      double
-# define TYPE_SIZE sizeof(double)
+# define TYPE      char*
+# define TYPE_SIZE sizeof(char*)
 # endif
 
 # ifndef LT

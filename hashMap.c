@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <assert.h>
 #include "hashMap.h"
 #include "structs.h"
 #include <string.h>

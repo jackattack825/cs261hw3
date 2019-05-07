@@ -1,7 +1,7 @@
 #ifndef __LINKEDLIST_H
 #define __LINKEDLIST_H
 
-# define TYPE      double
+# define TYPE      char*
 /*# define TYPE_SIZE sizeof(TYPE)*/
 
 typedef struct ListStack LinkedList;
@@ -20,4 +20,3 @@ void addLinkedList(LinkedList *l, TYPE val);
 int containsLinkedList(LinkedList *l, TYPE val);
 void removeLinkedList(LinkedList *l, TYPE val);
 #endif
-

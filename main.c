@@ -23,15 +23,15 @@ int main (int argc, const char * argv[]) {
     /*Write this function*/
   int ch;
   char* temp;
-  LinkedList* l;
+  LinkedList* l= malloc(sizeof(struct LinkedList*));
   FILE* f;
-  hashMap* hM;
+  hashMap* hM= malloc(sizeof(struct hashMap*));
   if(argc <1){
     printf("not enough args");
     exit(0);
   }
   initMap(hM, 16);
-  f=fopen(argv[1], 'r');
+  f=fopen(argv[1], "r");
   ch= getc(f);
   initLinkedList(l);
 
@@ -39,7 +39,7 @@ int main (int argc, const char * argv[]) {
     temp= getWord(f);
     pushLinkedList(l, temp);
     if(containsKey(hM, temp))
-      insertMap(hM, temp, atMap(hM, temp) +1);
+      insertMap(hM, temp, *(atMap(hM, temp)) +1);
     else
       insertMap(hM, temp, 1);
     ch=getc(f);
@@ -47,13 +47,17 @@ int main (int argc, const char * argv[]) {
   while(!isEmptyLinkedList(l)){
     temp= topLinkedList(l);
     popLinkedList(l);
-    printf("%s : %d\n", temp, atMap(hM, temp));
+    printf("%s : %d\n", temp, *(atMap(hM, temp)));
   }
+
+  free(hM);
+  free(temp);
+  free(l);
   return 0;
 }
 
 char* getWord(FILE *file){
-  char* c;
+  char* c=malloc(sizeof(char));
   fgets(c, 20, file);
   return c;
 }
