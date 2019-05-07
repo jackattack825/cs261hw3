@@ -94,7 +94,6 @@ ValueType* atMap (struct hashMap * ht, KeyType k)
 int containsKey (struct hashMap * ht, KeyType k)
 {  /*write this*/
 	int hash, index;
-	struct hashLink* curr;
 	hash= stringHash1(k);
 	index= (int) (labs(hash) % ht->tableSize);
 	if(ht->table[index]==NULL)
