@@ -63,7 +63,7 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 		index= (int) (labs(hash) % ht->tableSize);
 		ht->table[index]->value=v;
 	}
-
+/*
 	loadFac = ht->count/ht->tableSize;
 
 	if(loadFac > 0.75){
@@ -84,6 +84,7 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 		}
 		free(oldht);
 	}
+	*/
 }
 
 ValueType* atMap (struct hashMap * ht, KeyType k)

@@ -143,6 +143,8 @@ void removeLinkedList (LinkedList *l, TYPE val)
         if(cur->val==val){
           _removeLink(prev, cur);
         }
+        prev=cur;
+        cur=cur->next;
       }
 
 	}
