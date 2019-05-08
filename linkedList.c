@@ -106,7 +106,7 @@ int containsLinkedList(LinkedList *l, TYPE val)
 {
 /* write this function */
   struct Link* curr= l->head;
-  while(curr->next!=NULL){
+  while(curr!=NULL){
     if(curr->val==val)
       return 1;
     curr=curr->next;
