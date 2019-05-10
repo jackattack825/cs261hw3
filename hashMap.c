@@ -49,7 +49,7 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 	int hash, index;
 	struct hashLink* newLink;
 	if(!containsKey(ht, k)){
-		hash= stringHash1(k);
+		hash= stringHash2(k);
 		index= (int) (labs(hash) % ht->tableSize);
 		newLink= (struct hashLink*) malloc(sizeof(struct hashLink));
 		assert(newLink);
@@ -59,7 +59,7 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 		ht->count++;
 	}
 	else{
-		hash= stringHash1(k);
+		hash= stringHash2(k);
 		index= (int) (labs(hash) % ht->tableSize);
 		ht->table[index]->value=v;
 	}
@@ -90,7 +90,7 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
 ValueType* atMap (struct hashMap * ht, KeyType k)
 { /*write this?*/
 	int hash, index;
-	hash= stringHash1(k);
+	hash= stringHash2(k);
 	index= (int) (labs(hash) % ht->tableSize);
 	return &(ht->table[index]->value);
 }
@@ -98,7 +98,7 @@ ValueType* atMap (struct hashMap * ht, KeyType k)
 int containsKey (struct hashMap * ht, KeyType k)
 {  /*write this*/
 	int hash, index;
-	hash= stringHash1(k);
+	hash= stringHash2(k);
 	index= (int) (labs(hash) % ht->tableSize);
 	if(ht->table[index]==NULL)
 		return 0;
@@ -110,7 +110,7 @@ void removeKey (struct hashMap * ht, KeyType k)
 	int hash, index;
 	struct hashLink* curr;
 	struct hashLink* prev;
-	hash= stringHash1(k);
+	hash= stringHash2(k);
 	index= (int) (labs(hash) % ht->tableSize);
 	if(ht->table[index]==NULL)
 		return;

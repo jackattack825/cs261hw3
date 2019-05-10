@@ -21,6 +21,7 @@ char* getWord(FILE *file); /* prototype */
 
 int main (int argc, const char * argv[]) {
     /*Write this function*/
+  int* i;
   char* temp;
   LinkedList* l;
   FILE* f;
@@ -35,33 +36,21 @@ int main (int argc, const char * argv[]) {
     printf("not enough args");
     exit(0);
   }
-  initMap(hM, 16);
-
-  insertMap(hM, "hello", 1);
-  if(containsKey(hM, "hello")){
-    printf("success\n");
-    printf("entry is %d\n", *(atMap(hM, "hello")));
-    removeKey(hM, "hello");
-  }
+  initMap(hM, 50);
 
   f=fopen(argv[1], "r");
   initLinkedList(l);
 
-  pushLinkedList(l, "dog");
-  if(containsLinkedList(l, "dog")){
-    printf("success\n");
-    printf("entry is %s\n\n\n\n\n", topLinkedList(l));
-    popLinkedList(l);
-  }
-
   while(!feof(f)){
     temp= getWord(f);
-    if(!containsLinkedList(l, temp)){
+    if(!containsLinkedList(l, temp) && temp[0]!='\r\n'){
       pushLinkedList(l, temp);
       printf("added %s to list\n", topLinkedList(l));
     }
     if(containsKey(hM, temp)){
-      insertMap(hM, temp, *(atMap(hM, temp)) +1);
+      i= atMap(hM, temp);
+      /*insertMap(hM, temp, (*i) + 1); */
+      (*i)++;
       printf("added %d to map\n", *(atMap(hM, temp)));
     }
     else{
@@ -72,7 +61,9 @@ int main (int argc, const char * argv[]) {
   }
   while(!isEmptyLinkedList(l)){
     temp=topLinkedList(l);
-    printf("Word %s : times %d\n", temp, *(atMap(hM, temp)));
+    if(*temp!=0)
+      printf("Word %s : times %d\n", temp, *(atMap(hM, temp)));
+    /*printf("ascii of first char is %d\n", temp[0]); */
     popLinkedList(l);
     free(temp);
   }
@@ -86,20 +77,37 @@ int main (int argc, const char * argv[]) {
 }
 
 char* getWord(FILE *file){
-  char* c=malloc(15* sizeof(char));
-  int count=0;
-  int temp;
-  while((temp = fgetc(file)) != EOF)
+  int length = 0;
+	int maxLength = 16;
+	char character;
+
+	char* word = (char*)malloc(sizeof(char) * maxLength);
+	assert(word != NULL);
+
+	while( (character = fgetc(file)) != EOF)
 	{
-		if(temp == ' ' || temp == '\n')
-		  break;
-		else
+		if((length+1) > maxLength)
 		{
-      c[count]=temp;
-			count++;
+			maxLength *= 2;
+			word = (char*)realloc(word, maxLength);
 		}
+		if((character >= '0' && character <= '9') || /*is a number*/
+		   (character >= 'A' && character <= 'Z') || /*or an uppercase letter*/
+		   (character >= 'a' && character <= 'z') || /*or a lowercase letter*/
+		   character == 39) /*or is an apostrophy*/
+		{
+			word[length] = character;
+			length++;
+		}
+		else if(length > 0)
+			break;
 	}
-  c[++count]='\n';
-  printf("obtained %s\n", c);
-  return c;
+
+	if(length == 0)
+	{
+		free(word);
+		return NULL;
+	}
+	word[length] = '\0';
+	return word;
 }
